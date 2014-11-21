@@ -1,6 +1,11 @@
 package boulderSim;
 
-import java.util.HashMap;
+import java.util.TreeMap;
+
+import commands.Command;
+import commands.kawaiiHandler;
+import commands.simpleDataHandler;
+import commands.streamHandler;
 
 /**
  * A speaker is an object which focuses on sending requested messages to System.out
@@ -11,14 +16,14 @@ import java.util.HashMap;
  */
 public class Speaker {
 	
-	private HashMap<String, String> callReplies;
+	private TreeMap<String, Command> callReplies;
 	
 	/**
 	 * Prints the desired reply to the command parameter
 	 * @param command The call, or command trigger.
 	 */
 	public void SendMessage(String command){
-		System.out.println(callReplies.get(command));
+		System.out.println(callReplies.get(command).returnMessage());
 	}
 	
 	/**
@@ -26,8 +31,11 @@ public class Speaker {
 	 * to be called. this is purely for a test case
 	 */
 	public Speaker(){
-		this.callReplies=new HashMap<String, String>();
-		this.callReplies.put("!kawaii", "You're so kawaii!");
+		this.callReplies=new TreeMap<String, Command>();
+		this.callReplies.put("!sugoi", new kawaiiHandler());
+		this.callReplies.put("!data", new simpleDataHandler());
+		this.callReplies.put("!stream", new streamHandler());
+		this.callReplies.put("!kawaii", new kawaiiHandler());
 	}
 	
 	/**
@@ -35,7 +43,7 @@ public class Speaker {
 	 * valid or not
 	 * @return callReplies the HashMap containing the valid Commands and Replies
 	 */
-	public HashMap<String, String> getCallReplies(){
+	public TreeMap<String, Command> getCallReplies(){
 		return this.callReplies;
 	}
 }

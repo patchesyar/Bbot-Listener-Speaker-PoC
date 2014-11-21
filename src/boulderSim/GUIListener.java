@@ -33,23 +33,43 @@ public class GUIListener implements Listener{
 	 * and when you press the button, it sends a whisper to the speaker to send a message
 	 * to System.out. 
 	 */
-	public GUIListener(){
-		this.spk=new Speaker();
+	public GUIListener(Speaker speaker){
+		this.spk=speaker;
 		JFrame botFrame= new JFrame("Boulderbot PoC");
 		LayoutManager botLayout= new BorderLayout();
 		botFrame.setLayout(botLayout);
 		botFrame.add(new JLabel("Welcome to Boulderbot Listener Proof of concept!"), BorderLayout.NORTH);
-		JButton mainButton= new JButton("!kawaii");
-		mainButton.setBackground(Color.BLACK);
-		mainButton.setForeground(Color.RED);
-		mainButton.setFont(new Font("Arial", Font.PLAIN, 40));
-		mainButton.addActionListener(new ActionListener(){
+		int commandLength=spk.getCallReplies().size();
+		LayoutManager centerLayout;
+		if(commandLength%2==0){
+			centerLayout= new GridLayout(commandLength/2,2);
+		}
+		else{
+			centerLayout= new GridLayout(commandLength,1);
+		}
+		JPanel buttonPanel= new JPanel();
+		buttonPanel.setLayout(centerLayout);
+		for(String s: speaker.getCallReplies().keySet()){
+			JButton newButton=new JButton(s);
+			newButton.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					System.out.println(s+" was pressed");
+					whisper(s);
+				}
+			});
+
+			buttonPanel.add(newButton);
+		}
+		JPanel exitPanel= new JPanel();
+		JButton exitButton= new JButton("Exit");
+		exitButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				System.out.println("!kawaii was pressed");
-				whisper("!kawaii");
+				botFrame.dispose();
 			}
 		});
-		botFrame.add(mainButton,BorderLayout.CENTER);
+		exitPanel.add(exitButton);
+		botFrame.add(exitPanel,BorderLayout.SOUTH);
+		botFrame.add(buttonPanel,BorderLayout.CENTER);
 		botFrame.setVisible(true);
 		botFrame.setSize(500,500);
 		botFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

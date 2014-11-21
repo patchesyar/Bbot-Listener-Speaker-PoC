@@ -37,9 +37,10 @@ public class ChatListener implements Listener{
 	 * and parses it. If it is a valid command key, it whispers the command
 	 * to the speaker to be sent to System.out. If the input is the Kill Command,
 	 * The ChatListener terminates functionality. 
+	 * @param speaker 
 	 */
-	public ChatListener(){
-		this.spk=new Speaker();
+	public ChatListener(Speaker speaker){
+		this.spk=speaker;
 		//We are only using one arbitrary command for the proof of concept
 		Scanner sc= new Scanner(System.in);
 		String input=sc.next();

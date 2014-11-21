@@ -15,8 +15,9 @@ public class Boulderbot {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		GUIListener gl=new GUIListener();
-		ChatListener cl=new ChatListener();
+		Speaker speaker= new Speaker();
+		GUIListener gl=new GUIListener(speaker);
+		ChatListener cl=new ChatListener(speaker);
 	}
 
 }
