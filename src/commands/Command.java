@@ -7,6 +7,8 @@ package commands;
  *
  */
 public interface Command {
+	public String getName();
+
 	/**
 	 * core method of a Command. Returns a message (if any) to the speaker to be
 	 * sent to System.out

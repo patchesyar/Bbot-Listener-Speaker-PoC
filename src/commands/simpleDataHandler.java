@@ -2,6 +2,7 @@ package commands;
 
 public class simpleDataHandler implements Command{
 
+	public String name="!data";
 	/**
 	 * returns a message showing a simple data calculation
 	 */
@@ -18,5 +19,9 @@ public class simpleDataHandler implements Command{
 	 */
 	private int simpleDataCalc(){
 		return 5+5;
+	}
+	
+	public String getName(){
+		return this.name;
 	}
 }

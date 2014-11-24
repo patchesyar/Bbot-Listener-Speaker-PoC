@@ -1,11 +1,11 @@
 package boulderSim;
 
+
+import java.util.ArrayList;
 import java.util.TreeMap;
 
-import commands.Command;
-import commands.kawaiiHandler;
-import commands.simpleDataHandler;
-import commands.streamHandler;
+import commands.*;
+import plugins.*;
 
 /**
  * A speaker is an object which focuses on sending requested messages to System.out
@@ -16,7 +16,8 @@ import commands.streamHandler;
  */
 public class Speaker {
 	
-	private TreeMap<String, Command> callReplies;
+	protected TreeMap<String, Command> callReplies;
+	private ArrayList<basePlugin> plugins;
 	
 	/**
 	 * Prints the desired reply to the command parameter
@@ -32,10 +33,13 @@ public class Speaker {
 	 */
 	public Speaker(){
 		this.callReplies=new TreeMap<String, Command>();
-		this.callReplies.put("!sugoi", new kawaiiHandler());
-		this.callReplies.put("!data", new simpleDataHandler());
-		this.callReplies.put("!stream", new streamHandler());
-		this.callReplies.put("!kawaii", new kawaiiHandler());
+		this.plugins=new ArrayList<basePlugin>();
+		this.plugins.add(new helloPlugin(this));
+		System.out.println("helloPlugin detected");
+	}
+	
+	public void registerCommand(Command c){
+		this.callReplies.put(c.getName(), c);
 	}
 	
 	/**
